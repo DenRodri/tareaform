@@ -30,11 +30,11 @@ export default function Input({ name, type, onChange, options }) {
               value={option.value}
               onChange={(e) => onChange(name, e.target.value)}
             />
-            <label htmlFor={`${name}-${index}`}>{option.label}</label>
+            <label style={{marginLeft: "5px"}} htmlFor={`${name}-${index}`}>{option.label}</label>
           </div>))} 
         </div>
-      ): (
-        <div>
+      ) : type === "text" || type === "password"|| type === "number"  ? (
+        <div  className="CampContainer">
         <label htmlFor={name}>{name}</label>
         <input
           type={type}
@@ -43,6 +43,8 @@ export default function Input({ name, type, onChange, options }) {
           onChange={(e) => onChange(name, e.target.value)}
         />
         </div>
+      ) : (
+        <div></div>
       )}
       
     </div>

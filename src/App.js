@@ -1,14 +1,32 @@
 import React, { useState }  from 'react'
 import Input from './components/Input.js'
-import {InputList} from './InputList.js'
+import InputListMaker from './components/InputListMaker.js'
 import './App.css'
 export default function App() {
   const [formValues, setFormValues] = useState({});
  
+  const [FormatList, setFormatLists] = useState([
+    {
+    type: 'TEST! ',
+    name: 'TEST',
+    options: [
+        
+    ]},
+    {  type: '',
+    name: '',
+    options: [
+        
+    ]},
+ ]);
+
+  function UploadParentValue(value){
+    setFormatLists(value)
+  }
   
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form Values:', formValues);
+    console.log(FormatList)
     
   };
   const handleInputChange = (name, value) => {
@@ -19,13 +37,14 @@ export default function App() {
   };
 
   return (
-    <div>
+    <>
+       <InputListMaker SendInfo={UploadParentValue}/>
        <form className="form" onSubmit={handleSubmit}>
-      {InputList.map((Inp, i) => { 
+      {FormatList.map((Inp, i) => { 
           return <Input key={i} name={Inp.name} type={Inp.type} options={Inp.options} onChange={handleInputChange} />;
           })}
           <button type="submit">Submit</button>
         </form>
-    </div>
+    </>
   )
 }
