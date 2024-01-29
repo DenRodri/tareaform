@@ -5,7 +5,7 @@ export default function Input({ name, type, onChange, options }) {
   
     <div className="CampContainer">
       {type === "select" ? (
-        <div className="SelectContainer">
+        <div className="CampContainer">
           <label htmlFor={name}>{name}</label>
         <select id={name} name={name} onChange={(e) => onChange(name, e.target.value)}>
         <option value="">

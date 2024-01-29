@@ -20,6 +20,7 @@ export default function App() {
  ]);
 
   function UploadParentValue(value){
+    setFormValues({});
     setFormatLists(value)
   }
   
