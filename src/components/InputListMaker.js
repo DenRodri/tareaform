@@ -9,14 +9,11 @@ export default function InputListMaker({SendInfo}  ) {
         name: 'Button',
         },
      ]);
-     const [errors, setErrors] = useState([
-      
-     ]);
 
     const handleFirstForm = (e) => {
       e.preventDefault();
+      
       let NewDesignValue = [...designValue]
-      let NewErrors = [...errors]
       for(let i = 0; i < NumberInput; i++){
         NewDesignValue.unshift(
           {
@@ -26,19 +23,9 @@ export default function InputListMaker({SendInfo}  ) {
                 
             ]}
         )
-
-        NewErrors.unshift(
-          {
-            type: 'None',
-            name: '',
-            options: [
-                
-            ]}
-        )
       }
       setDisplay(true);
-      setDesignValues(NewDesignValue);
-      setErrors(NewErrors);
+      setDesignValues(NewDesignValue)
     }
 
     const handleFirstFormChange = (e) => {
@@ -114,13 +101,22 @@ export default function InputListMaker({SendInfo}  ) {
         });
       };
 
-
+      const GoBack = () => {
+        setDisplay(false);
+        setDesignValues([
+        
+          {  type: 'submit',
+          name: 'Button',
+          },
+       ])
+      }
   return (
     <div> 
         {display ? (
           <>
 
           <form className="form" onSubmit={handleSend}>
+          <button onClick={GoBack}>Ir atras</button>
           {designValue.map((data, index) => (
             <>
             {data.type === "submit" ? (
@@ -197,7 +193,9 @@ export default function InputListMaker({SendInfo}  ) {
                <div><h1>Elija una opcion!</h1></div>
               )
               } 
+              
               </>
+              
             )}
             
               </>
@@ -206,7 +204,7 @@ export default function InputListMaker({SendInfo}  ) {
            
             <button type="submit">Enviar</button>
         </form>
-
+       
           </>
         ) : (
           <>

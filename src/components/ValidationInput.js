@@ -4,10 +4,7 @@ export default function ValidationInput(values) {
     const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/;
   
     if (values.name === '') {
-      errors.name = 'El nombre es requerido!';
-    }
-    if (values.name.length() < 2 && values.type === "text") {
-      errors.name = 'Debe de ser mayor de 2 caracteres!';
+      errors.value = 'El nombre es requerido!';
     }
     if (!email_pattern.test(values.name) || values.type === "email") {
       errors.email = "No es un email";
