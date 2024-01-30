@@ -12,12 +12,12 @@ body {
   flex-direction: row;
   font-family: 'Arial', sans-serif;
   color: black;
-  height: 100vh; 
+  height: 100%; 
 }
 div{
   display: flex;
 }
-form {
+.form {
   background-color: #A288A6;
   padding: 1.5em;
   border-radius: 8px;
@@ -29,6 +29,8 @@ form {
   justify-content: center;
   margin-right: 10vw;
   margin-left: 10vw;
+  margin-top: 7.5vh;
+  margin-bottom: 7.5vh;
 }
 
 .CampContainer {

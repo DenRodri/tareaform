@@ -33,7 +33,7 @@ export default function Input({ name, type, onChange, options }) {
             <label style={{marginLeft: "5px"}} htmlFor={`${name}-${index}`}>{option.label}</label>
           </div>))} 
         </div>
-      ) : type === "text" || type === "password"|| type === "number"  ? (
+      ) : type === "text" || type === "password"|| type === "number" || type === "email"  ? (
         <div  className="CampContainer">
         <label htmlFor={name}>{name}</label>
         <input
@@ -43,6 +43,10 @@ export default function Input({ name, type, onChange, options }) {
           onChange={(e) => onChange(name, e.target.value)}
         />
         </div>
+      ) : type === "submit" ? (
+        
+          <button type={type} id={name} name={name}>Enviar</button>
+        
       ) : (
         <div></div>
       )}

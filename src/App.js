@@ -44,7 +44,7 @@ export default function App() {
       {FormatList.map((Inp, i) => { 
           return <Input key={i} name={Inp.name} type={Inp.type} options={Inp.options} onChange={handleInputChange} />;
           })}
-          <button type="submit">Submit</button>
+          
         </form>
     </>
   )
