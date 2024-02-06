@@ -150,6 +150,29 @@ export default function InputListMaker({SendInfo}  ) {
 
        ])
       }
+      const AddOne = () => {
+        let NewfieldErrors = [...fieldErrors];
+
+        NewfieldErrors.splice(NewfieldErrors.length-1,0,(
+          {
+            errorName: '',
+            errorOptions: {
+              
+            }
+          }
+        ))
+        let NewDesignValue = [...designValue]
+        NewDesignValue.splice(NewDesignValue.length-1,0,(
+          {
+            type: 'None',
+            name: '',
+            options: [
+                
+            ]}
+        ))
+        setFieldErrors(NewfieldErrors)
+        setDesignValues(NewDesignValue)
+      }
       useEffect(() => {
         
         const validationErrors = designValue.map((field) => ValidationInputList(field, designValue));
@@ -268,7 +291,7 @@ export default function InputListMaker({SendInfo}  ) {
             
               </div>
             ))}
-            
+            <button onClick={() => AddOne()} type="button" >Nuevo Input</button>
            {disableSubmit ? (<><button type="submit" disabled>Enviar</button></>): (<><button type="submit" >Enviar</button></>
            )}
             
