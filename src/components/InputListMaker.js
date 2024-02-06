@@ -5,6 +5,7 @@ export default function InputListMaker({SendInfo}  ) {
     const [NumberInput,setNumberInput] = useState(1);
     const [DisplayForm, setDisplayForm] = useState(false);
     const [formEdited, setFormEdited] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState(false)
     const [designValue, setDesignValues] = useState([
         
         {  type: 'submit',
@@ -25,7 +26,9 @@ export default function InputListMaker({SendInfo}  ) {
         NewfieldErrors.unshift(
           {
             errorName: '',
-            
+            errorOptions: {
+              
+            }
             
             
             
@@ -151,14 +154,15 @@ export default function InputListMaker({SendInfo}  ) {
         
         const validationErrors = designValue.map((field) => ValidationInputList(field, designValue));
         
-        // Check if there are any validation errors
+       
         const hasErrors = validationErrors.some((error) => Object.keys(error).length > 0);
         
         if (hasErrors) {
-
+          setDisableSubmit(true);
           setFieldErrors(validationErrors);
 
         }else{
+          setDisableSubmit(false);
           setFieldErrors(validationErrors);
         }
       
@@ -171,14 +175,14 @@ export default function InputListMaker({SendInfo}  ) {
           <form className="form" onSubmit={handleSend}>
           <button onClick={GoBack}>Ir atras</button>
           {designValue.map((data, index) => (
-            <>
+            <div className="ValueMappedBox" key={index}>
             {data.type === "submit" ? (
               <>
               </>
             ) : (
               <>
                <select
-            id="type"
+            id={`type-${index}`}
             name="type"
             value={designValue[index].type}
             onChange={(e) => handleInputChange(e, index)}>
@@ -201,7 +205,7 @@ export default function InputListMaker({SendInfo}  ) {
                value={designValue[index].name}
                onChange={(e) => handleInputChange(e, index)}
                />
-              {formEdited && fieldErrors[index] && <p className="Validation">{fieldErrors[index].errorName}</p>}
+              {fieldErrors[index].errorName && <p className="Validation">{fieldErrors[index].errorName}</p>}
                {designValue[index].options.map((option, optionIndex) => (
                  <div className="Option" key={optionIndex}>
                   <div>
@@ -229,7 +233,7 @@ export default function InputListMaker({SendInfo}  ) {
                   </div>
                    
                    
-                   {formEdited && fieldErrors[index].errorOptions && <p className="Validation">{fieldErrors[index].errorOptions[optionIndex].errorName}</p>}
+                   {fieldErrors[index]?.errorOptions && fieldErrors[index]?.errorOptions[optionIndex]?.errorName && <p className="Validation">{fieldErrors[index]?.errorOptions[optionIndex]?.errorName}</p>}
                    
                 
                  </div>
@@ -238,20 +242,20 @@ export default function InputListMaker({SendInfo}  ) {
                <button className="add" type="button" onClick={(e) => handleOptionChange(e, index)}>
                  Añadir opcion
                </button>
-               {formEdited && fieldErrors[index] && <p className="Validation">{fieldErrors[index].errorRadio}</p>}
+               {fieldErrors[index].errorRadio && <p className="Validation">{fieldErrors[index].errorRadio}</p>}
                
                </div>
               ) : designValue[index].type === "text" || designValue[index].type === "number"  || designValue[index].type === "email" || designValue[index].type === "password" ? (
                <div className="CampContainer">
                    <input
-                   id="name"
+                   id={`name-${index}`}
                    name="name"
                    type="text"
                    placeholder="name"
                    value={designValue[index].name}
                    onChange={(e) => handleInputChange(e, index)}
                    />
-                   {formEdited && fieldErrors[index] && <p className="Validation">{fieldErrors[index].errorName}</p>}
+                   {fieldErrors[index].errorName && <p className="Validation">{fieldErrors[index].errorName}</p>}
                </div>
               ) : (
               <div><h1>Elija una opcion!</h1></div>
@@ -262,11 +266,12 @@ export default function InputListMaker({SendInfo}  ) {
               
             )}
             
-              </>
+              </div>
             ))}
             
-           
-            <button type="submit">Enviar</button>
+           {disableSubmit ? (<><button type="submit" disabled>Enviar</button></>): (<><button type="submit" >Enviar</button></>
+           )}
+            
         </form>
        
           </>

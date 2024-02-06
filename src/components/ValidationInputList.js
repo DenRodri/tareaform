@@ -15,6 +15,9 @@ export default function ValidationInputList(values, designValues) {
     if(values.type === "radio" && values.options.length >= 5){
     error.errorRadio = 'No puede tener mas de 5 opciones!';
     }
+    if((values.type === "radio" || values.type === "select") && values.options.length < 2){
+      error.errorRadio = 'Debe llevar por lo menos dos opciones';
+      }
     if ((values.type === "radio" || values.type === "select") && values.options.length > 0) {
       const optionsErrors = values.options.map((option) => {
         let optionError = {};
@@ -30,6 +33,5 @@ export default function ValidationInputList(values, designValues) {
     error.errorOptions = optionsErrors;
   }
     }
-    console.log(error);
     return error;
   }
