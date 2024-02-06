@@ -87,7 +87,20 @@ button[type="submit"]:hover {
   margin-bottom: 2.5vh;
 }
 
-.delete{
-  height: 75%;
+.Option{
+  height: 15vh;
 
+  display: flex;
+  flex-direction: column
+}
+.delete{
+  height: 6vh;
+  margin-top: 0;
+}
+
+.Validation{
+  color: red;
+  text-align: center;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 }

@@ -1,18 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import ValidationInputList from './ValidationInputList.js';
 
 export default function InputListMaker({SendInfo}  ) {
     const [NumberInput,setNumberInput] = useState(1);
-    const [display, setDisplay] = useState(false);
+    const [DisplayForm, setDisplayForm] = useState(false);
+    const [formEdited, setFormEdited] = useState(false);
     const [designValue, setDesignValues] = useState([
         
         {  type: 'submit',
         name: 'Button',
+        options: [
+                
+        ]
         },
+     ]);
+     const [fieldErrors, setFieldErrors] = useState([
+
      ]);
 
     const handleFirstForm = (e) => {
       e.preventDefault();
-      
+      let NewfieldErrors = [...fieldErrors]
+      for(let i = 0; i < NumberInput; i++){
+        NewfieldErrors.unshift(
+          {
+            errorName: '',
+            
+            
+            
+            
+          }
+        )
+      }
       let NewDesignValue = [...designValue]
       for(let i = 0; i < NumberInput; i++){
         NewDesignValue.unshift(
@@ -24,7 +43,8 @@ export default function InputListMaker({SendInfo}  ) {
             ]}
         )
       }
-      setDisplay(true);
+      setDisplayForm(true);
+      setFieldErrors(NewfieldErrors)
       setDesignValues(NewDesignValue)
     }
 
@@ -39,8 +59,19 @@ export default function InputListMaker({SendInfo}  ) {
 
     const handleSend = (e) => {
         e.preventDefault();
-        console.log(designValue)
-        SendInfo(designValue)
+        const hasErrors = fieldErrors.some((error) => Object.keys(error).length > 0);
+        console.log(hasErrors);
+        
+        setFormEdited(true);
+        if (hasErrors) {
+          console.log('Please fix the errors before submitting.');
+          alert("Aun tiene errores en su formulario")
+          console.log(fieldErrors);
+        } else {
+          console.log('Form is valid:', designValue);
+          SendInfo(designValue);
+          console.log(fieldErrors);
+        }
       };
       
       const handleInputChange = (e, index) => {
@@ -54,7 +85,7 @@ export default function InputListMaker({SendInfo}  ) {
               [name]: value,
               options: []
             }
-            
+            setFormEdited(false);
           }else{
           updatedDesignValues[index] = {
             ...updatedDesignValues[index],
@@ -66,15 +97,17 @@ export default function InputListMaker({SendInfo}  ) {
       };
       const handleOptionChange = (e, index) => {
 
-    
         setDesignValues((prevDesignValues) => {
           const updatedDesignValues = [...prevDesignValues];
           updatedDesignValues[index] = {
             ...updatedDesignValues[index],
             options: [...updatedDesignValues[index].options, { label: '', value: '' }],
           };
+          
+
           return updatedDesignValues;
         });
+
       };
     
       const handleOptionDelete = (index, optionIndex) => {
@@ -102,17 +135,37 @@ export default function InputListMaker({SendInfo}  ) {
       };
 
       const GoBack = () => {
-        setDisplay(false);
+        setDisplayForm(false);
+        setFormEdited(false);
         setDesignValues([
         
           {  type: 'submit',
           name: 'Button',
           },
        ])
+       setFieldErrors([
+
+       ])
       }
+      useEffect(() => {
+        
+        const validationErrors = designValue.map((field) => ValidationInputList(field, designValue));
+        
+        // Check if there are any validation errors
+        const hasErrors = validationErrors.some((error) => Object.keys(error).length > 0);
+        
+        if (hasErrors) {
+
+          setFieldErrors(validationErrors);
+
+        }else{
+          setFieldErrors(validationErrors);
+        }
+      
+      }, [formEdited, designValue]);
   return (
     <div> 
-        {display ? (
+        {DisplayForm ? (
           <>
 
           <form className="form" onSubmit={handleSend}>
@@ -148,9 +201,11 @@ export default function InputListMaker({SendInfo}  ) {
                value={designValue[index].name}
                onChange={(e) => handleInputChange(e, index)}
                />
+              {formEdited && fieldErrors[index] && <p className="Validation">{fieldErrors[index].errorName}</p>}
                {designValue[index].options.map((option, optionIndex) => (
-                 <div key={optionIndex}>
-                   <input
+                 <div className="Option" key={optionIndex}>
+                  <div>
+                  <input
                      type="text"
                      name={`label`}
                      placeholder="Label"
@@ -171,15 +226,23 @@ export default function InputListMaker({SendInfo}  ) {
                    >
                      Eliminar opcion
                    </button>
+                  </div>
+                   
+                   
+                   {formEdited && fieldErrors[index].errorOptions && <p className="Validation">{fieldErrors[index].errorOptions[optionIndex].errorName}</p>}
+                   
+                
                  </div>
+                
                ))}
                <button className="add" type="button" onClick={(e) => handleOptionChange(e, index)}>
                  Añadir opcion
                </button>
+               {formEdited && fieldErrors[index] && <p className="Validation">{fieldErrors[index].errorRadio}</p>}
                
                </div>
-              ) : designValue[index].type === "text" || designValue[index].type === "password"|| designValue[index].type === "number"  || designValue[index].type === "email" ? (
-               <div>
+              ) : designValue[index].type === "text" || designValue[index].type === "number"  || designValue[index].type === "email" || designValue[index].type === "password" ? (
+               <div className="CampContainer">
                    <input
                    id="name"
                    name="name"
@@ -188,9 +251,10 @@ export default function InputListMaker({SendInfo}  ) {
                    value={designValue[index].name}
                    onChange={(e) => handleInputChange(e, index)}
                    />
+                   {formEdited && fieldErrors[index] && <p className="Validation">{fieldErrors[index].errorName}</p>}
                </div>
               ) : (
-               <div><h1>Elija una opcion!</h1></div>
+              <div><h1>Elija una opcion!</h1></div>
               )
               } 
               
@@ -211,7 +275,7 @@ export default function InputListMaker({SendInfo}  ) {
           <form className="form" onSubmit={handleFirstForm}>
           <label htmlFor="number">Cuantas preguntas quiere en su formulario?</label>
           <input
-                   id="name"
+                   id="Number"
                    name="Number"
                    type="number"
                    placeholder="Numero de preguntas"
