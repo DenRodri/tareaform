@@ -1,5 +1,5 @@
 import React, { useState }  from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 
@@ -8,99 +8,133 @@ export default function SignupForms({Submit}) {
   const [Display, setDisplay] = useState(true);
   const SwitchForm = () => {
     setDisplay(!Display);
+    setFieldTouched('email', false)
+    setFieldTouched('password', false)
+    setFieldTouched('confirmPassword', false)
+    setFieldTouched('modeOfContact', false)
+    setFieldTouched('phone', false)
   };
   const formLabel = Display ? 'Login' : 'Sign Up';
   const options = [
     { key : 'Email', value: 'emailmoc'},
     {key: 'Telefono', value: 'telephonemoc'}
   ]
+
   
-  const initialValuesRegistro = {
-    email: '',
-    password: '',
-    confirmPassword: '',
-    modeOfContact: '',
-    phone: ''
-  }
 
-  const initialValuesLogin = {
-    email: '',
-    password: ''
-  }
-
-  const validationSchemaLogin = Yup.object({
-    email: Yup.string().email('Invalid email format').required('Requerido'),
-    password: Yup.string().required('Requerido')
+  const { handleSubmit, values,setFieldValue, errors, touched, setFieldTouched } = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+      modeOfContact: '',
+      phone: ''
+    },
+    validationSchema: Yup.object({
+      
+      email: Yup.string()
+        .email('Formato de Email Invalido').required('Requerido'),
+      password: Yup.string().required('Requerido'),
+      confirmPassword: Display ? 
+      Yup.string().oneOf([Yup.ref('password'), ''], 'Las contraseñas deben alinearse')
+          .required('Requerido')
+      : Yup.string(),
+      modeOfContact: Display?
+      Yup.string().required('Requerido')
+      : Yup.string(),
+      phone: Display ?
+      Yup.string().when('modeOfContact', {
+        is: 'telephonemoc',
+        then: () => Yup.string().matches(/^[0-9]+$/, 'Solo pueden ser digitos')
+        .min(9, 'Debe ser exactamente 9 digitos')
+        .max(9, 'Debe ser exactamente 9 digitos')
+        .required('Requerido'),
+      }) : Yup.string(),
+  }),
+    onSubmit: (data) => {
+      console.log('Form data', data)
+      Submit();
+    }
   })
-
-
-  const validationSchemaRegistro = Yup.object({
-    email: Yup.string()
-    .email('Formato de Email Invalido')
-    .required('Requerido'),
-    password: Yup.string().required('Requerido'),
-    confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), ''], 'Las contraseñas deben alinearse')
-    .required('Requerido'),
-    modeOfContact: Yup.string().required('Requerido'),
-    phone: Yup.string().when('modeOfContact', {
-      is: 'telephonemoc',
-      then: () => Yup.string().required('Requerido')
-    })
-  })
-  
-  const onSubmit = values => {
-    console.log('Form data', values)
-    Submit();
-  }
 
 
 
   return (
     <>
-      <Formik
-        initialValues={Display ? initialValuesRegistro : initialValuesLogin}
-        validationSchema={Display ? validationSchemaRegistro : validationSchemaLogin}
-        onSubmit={onSubmit}
-      >
-        <Form className="LoginForm">
+        <form onSubmit={handleSubmit} className="LoginForm">
           <button type="button" onClick={SwitchForm}>{formLabel}</button>
           <div className="form-control">
             <label htmlFor="email">Email</label>
-            <Field type="email" id="email" name="email" />
-            <ErrorMessage name="email" component="div" className="error" />
+            <input onChange={ (e)=>{
+              setFieldValue("email", e.target.value)
+            }} 
+            value={values.email}
+            type="email" 
+            id="email" 
+            name="email"
+            onFocus={() => setFieldTouched('email', true)}/>
+            {touched.email && errors.email && <p className="Validation">{errors.email}</p>}
           </div>
           <div className="form-control">
               <label htmlFor="password">Contraseña</label>
-              <Field type="password" id="password" name="password" />
-              <ErrorMessage name="password" component="div" className="error" />
+              <input 
+              onChange={ (e)=>{
+                setFieldValue("password", e.target.value)
+                console.log(touched.password)
+                
+              }} 
+              value={values.password}
+              type="password" 
+              id="password" 
+              name="password"
+              onFocus={() => setFieldTouched('password', true)} />
+              {touched.password && errors.password && <p className="Validation">{errors.password}</p>}
             </div>
           {Display && (
             <>
               <div className="form-control">
                 <label htmlFor="confirmPassword">Confirmar contraseña</label>
-                <Field type="password" id="confirmPassword" name="confirmPassword" />
-                <ErrorMessage name="confirmPassword" component="div" className="error" />
+                <input onChange={ (e)=>{
+                setFieldValue("confirmPassword", e.target.value)
+              }} 
+              value={values.confirmPassword}
+              type="password" 
+              id="confirmPassword" 
+              name="confirmPassword" 
+              onFocus={() => setFieldTouched('confirmPassword', true)}/>
+                {touched.confirmPassword && errors.confirmPassword && <p className="Validation">{errors.confirmPassword}</p>}
               </div>
               <div className="form-control">
                 <label htmlFor="modeOfContact">Modo de contacto</label>
-                <Field as="select" id="modeOfContact" name="modeOfContact">
+                <select onChange={ (e)=>{
+                setFieldValue("modeOfContact", e.target.value)
+              }} 
+              value={values.modeOfContact}
+              id="modeOfContact" 
+              name="modeOfContact"
+              onFocus={() => setFieldTouched('modeOfContact', true)}>
                   <option value="">Select mode of contact</option>
                   <option value="emailmoc">Email</option>
                   <option value="telephonemoc">Telefono</option>
-                </Field>
-                <ErrorMessage name="modeOfContact" component="div" className="error" />
+                </select>
+                {touched.modeOfContact && errors.modeOfContact && <p className="Validation">{errors.modeOfContact}</p>}
               </div>
               <div className="form-control">
                 <label htmlFor="phone">Telefono</label>
-                <Field type="text" id="phone" name="phone" />
-                <ErrorMessage name="phone" component="div" className="error" />
+                <input onChange={ (e)=>{
+                setFieldValue("phone", e.target.value)
+              }} 
+              value={values.phone}
+              type="text" 
+              id="phone" 
+              name="phone" 
+              onFocus={() => setFieldTouched('phone', true)}/>
+                {touched.phone && errors.phone && <p className="Validation">{errors.phone}</p>}
               </div>
             </>
           )}
-          <button type="submit">Submit</button>
-        </Form>
-      </Formik>
+          <button type="submit">Enviar</button>
+        </form>
     </>
   );
 }
