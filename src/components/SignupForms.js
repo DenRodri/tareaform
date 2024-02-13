@@ -8,11 +8,12 @@ export default function SignupForms({Submit}) {
   const [Display, setDisplay] = useState(true);
   const SwitchForm = () => {
     setDisplay(!Display);
-    setFieldTouched('email', false)
-    setFieldTouched('password', false)
-    setFieldTouched('confirmPassword', false)
-    setFieldTouched('modeOfContact', false)
-    setFieldTouched('phone', false)
+    const fieldsToReset = ['email', 'password', 'confirmPassword', 'modeOfContact', 'phone'];
+    setTimeout(() => {
+      fieldsToReset.forEach(field => {
+        setFieldTouched(field, false);
+      });
+    }, 0);
   };
   const formLabel = Display ? 'Login' : 'Sign Up';
   const options = [
@@ -79,9 +80,7 @@ export default function SignupForms({Submit}) {
               <label htmlFor="password">Contraseña</label>
               <input 
               onChange={ (e)=>{
-                setFieldValue("password", e.target.value)
-                console.log(touched.password)
-                
+                setFieldValue("password", e.target.value)                
               }} 
               value={values.password}
               type="password" 
@@ -113,7 +112,7 @@ export default function SignupForms({Submit}) {
               id="modeOfContact" 
               name="modeOfContact"
               onFocus={() => setFieldTouched('modeOfContact', true)}>
-                  <option value="">Select mode of contact</option>
+                  <option value="">Selecciona el modo de contactot</option>
                   <option value="emailmoc">Email</option>
                   <option value="telephonemoc">Telefono</option>
                 </select>
