@@ -1,10 +1,12 @@
 import React, { useState }  from 'react'
 import Input from './components/Input.js'
 import InputListMaker from './components/InputListMaker.js'
+import SignupForms from './components/SignupForms.js'
 import './App.css'
 export default function App() {
   const [formValues, setFormValues] = useState([]);
   const [formErrors, setFormErrors] = useState([]);
+  const [Display, setDisplay] = useState(true);
   const [FormatList, setFormatLists] = useState([
     {
     type: 'TEST! ',
@@ -39,7 +41,10 @@ export default function App() {
 
   setFormErrors(newFormErrors);
 }
+const LoginSuccessful = (e) => {
+  setDisplay(false);
   
+};
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form Errors:', formErrors)
@@ -47,6 +52,7 @@ export default function App() {
     console.log(FormatList)
     
   };
+  
   const handleInputChange = (value, type, index) => {
     let Error="";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ 
@@ -92,7 +98,13 @@ export default function App() {
 
   return (
     <>
-       <InputListMaker SendInfo={UploadParentValue}/>
+    {Display ? (
+      <>
+      <SignupForms Submit={LoginSuccessful}></SignupForms>
+      </>
+    ) : ( 
+      <>
+      <InputListMaker SendInfo={UploadParentValue}/>
        <form className="form" onSubmit={handleSubmit}>
        {FormatList.map((Inp, i) => (
   <Input
@@ -108,6 +120,9 @@ export default function App() {
 ))}
           
         </form>
+      </>
+    )}
+       
     </>
   )
 }

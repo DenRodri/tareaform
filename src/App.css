@@ -17,6 +17,28 @@ body {
 div{
   display: flex;
 }
+.form-control{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1em;
+  
+}
+.LoginForm{
+  background-color: #A288A6;
+  padding: 1.5em;
+  border-radius: 8px;
+  width: 400px;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10vw;
+  margin-left: 10vw;
+  margin-top: 7.5vh;
+  margin-bottom: 7.5vh;
+}
 .form {
   background-color: #A288A6;
   padding: 1.5em;
