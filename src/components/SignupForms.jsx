@@ -1,10 +1,10 @@
-import React, { useState }  from 'react'
+import React, { useState, useEffect }  from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 
 export default function SignupForms({Submit}) {
-  
+  const [Add, SetAdd] = useState(true);
   const [Display, setDisplay] = useState(true);
   const SwitchForm = () => {
     setDisplay(!Display);
@@ -14,12 +14,14 @@ export default function SignupForms({Submit}) {
         setFieldTouched(field, false);
       });
     }, 0);
+    if(Display){
+      setFieldValue("confirmPassword", '');
+      setFieldValue("modeOfContact", '');
+      setFieldValue("phone", '');
+    }
   };
-  const formLabel = Display ? 'Login' : 'Sign Up';
-  const options = [
-    { key : 'Email', value: 'emailmoc'},
-    {key: 'Telefono', value: 'telephonemoc'}
-  ]
+  const formLabel = Display ? 'Iniciar Sesion' : 'Registro';
+
 
   
 
@@ -40,7 +42,7 @@ export default function SignupForms({Submit}) {
       Yup.string().oneOf([Yup.ref('password'), ''], 'Las contraseñas deben alinearse')
           .required('Requerido')
       : Yup.string(),
-      modeOfContact: Display?
+      modeOfContact: Display ?
       Yup.string().required('Requerido')
       : Yup.string(),
       phone: Display ?
@@ -54,11 +56,62 @@ export default function SignupForms({Submit}) {
   }),
     onSubmit: (data) => {
       console.log('Form data', data)
-      Submit();
+      let NewLocal = JSON.parse(localStorage.getItem("users"))
+      if(Display){
+        
+     
+        if(Add === true){
+            alert("Has creado una cuenta!");
+            let NewUser =
+            { email: values.email,
+             password: values.password,
+             modeOfContact: values.modeOfContact,
+             phone: values.phone
+            }
+          NewLocal.push(NewUser);
+          localStorage.setItem("users", JSON.stringify(NewLocal))
+          console.log(localStorage.getItem("users"));
+          console.log(NewLocal);
+        }else{
+          alert("Ya este email tiene una cuenta")
+        }
+        SetAdd(false)
+      }else{
+        let Test = false;
+        for(let i = 0; i < NewLocal.length ; i++){
+          if(NewLocal[i].email === values.email && NewLocal[i].password === values.password){
+            alert("Inicio de Sesion Exitoso")
+            Test = true;
+            Submit(values.email, values.password);
+
+            break;
+          }else{
+            Test = false;
+          }
+        }
+        if(Test === false){
+          alert("Email o Contraseña incorrectas")
+        }
+
+      }
     }
   })
 
-
+  useEffect(() => {
+        
+    if(localStorage.getItem("users") === null){
+      localStorage.setItem("users", JSON.stringify([]))
+    }
+    let NewLocal = JSON.parse(localStorage.getItem("users"))
+    for(let i = 0; i < NewLocal.length ; i++){
+      if(NewLocal[i].email === values.email){
+        SetAdd(false)
+        break;
+      }else{
+        SetAdd(true)
+      }
+    }
+  },[values.email]);
 
   return (
     <>
@@ -74,6 +127,7 @@ export default function SignupForms({Submit}) {
             id="email" 
             name="email"
             onFocus={() => setFieldTouched('email', true)}/>
+            {touched.email && Display && Add===false &&<p className="Validation">"Este email ya esta en uso</p>}
             {touched.email && errors.email && <p className="Validation">{errors.email}</p>}
           </div>
           <div className="form-control">
@@ -112,7 +166,7 @@ export default function SignupForms({Submit}) {
               id="modeOfContact" 
               name="modeOfContact"
               onFocus={() => setFieldTouched('modeOfContact', true)}>
-                  <option value="">Selecciona el modo de contactot</option>
+                  <option value="">Selecciona el modo de contacto</option>
                   <option value="emailmoc">Email</option>
                   <option value="telephonemoc">Telefono</option>
                 </select>
