@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useState, useEffect }  from 'react'
 import Input from './components/Input.jsx'
 import InputListMaker from './components/InputListMaker.jsx'
 import SignupForms from './components/SignupForms.jsx'
@@ -96,7 +96,12 @@ const Login = (email, password) => {
     }
 
   };
-
+  useEffect(() => {
+    let NewLogged = JSON.parse(localStorage.getItem("loggedin"))
+    if(NewLogged[0] === true){
+      Login(NewLogged[1], NewLogged[2])
+    }
+  },[]);
   return (
     <>
     {Display ? (
@@ -107,7 +112,10 @@ const Login = (email, password) => {
       <>
       <InputListMaker SendInfo={UploadParentValue}/>
       <div className='AccountData'>
-      <button onClick={()=> setDisplay(true)}>Acabar Sesion</button>
+      <button onClick={()=> {
+        setDisplay(true)
+        localStorage.setItem("loggedin", JSON.stringify([false, '', '']))
+      }}>Acabar Sesion</button>
       <h2>{account[0]}</h2>
       <h2>{account[1]}</h2>
       </div>

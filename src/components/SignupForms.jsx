@@ -82,6 +82,7 @@ export default function SignupForms({Submit}) {
           if(NewLocal[i].email === values.email && NewLocal[i].password === values.password){
             alert("Inicio de Sesion Exitoso")
             Test = true;
+            localStorage.setItem("loggedin", JSON.stringify([true, values.email, values.password]))
             Submit(values.email, values.password);
 
             break;
@@ -99,9 +100,11 @@ export default function SignupForms({Submit}) {
 
   useEffect(() => {
         
-    if(localStorage.getItem("users") === null){
-      localStorage.setItem("users", JSON.stringify([]))
+    if(localStorage.getItem("users") === null || localStorage.getItem("loggedin") === null){
+      localStorage.setItem("users", JSON.stringify([]));
+      localStorage.setItem("loggedin", JSON.stringify([false, '', '']))
     }
+
     let NewLocal = JSON.parse(localStorage.getItem("users"))
     for(let i = 0; i < NewLocal.length ; i++){
       if(NewLocal[i].email === values.email){
