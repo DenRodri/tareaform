@@ -28,9 +28,8 @@ div{
 
 .AccountData{
   position: absolute;
-  top: 0;
   right: 0;
-  float: right;
+  
   background-color: white;
   border-radius: 5px;
   width: 20%;
