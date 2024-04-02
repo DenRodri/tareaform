@@ -216,6 +216,7 @@ export default function InputListMaker({SendInfo}  ) {
                <option value="email">Email</option>
                <option value="radio">Radio</option>
                <option value="select">Select</option>
+               <option value="date">Fecha</option>
            </select>
               {designValue[index].type === "radio" || designValue[index].type === "select" ? (
                <div className="radioSelection">
@@ -268,7 +269,7 @@ export default function InputListMaker({SendInfo}  ) {
                {fieldErrors[index].errorRadio && <p className="Validation">{fieldErrors[index].errorRadio}</p>}
                
                </div>
-              ) : designValue[index].type === "text" || designValue[index].type === "number"  || designValue[index].type === "email" || designValue[index].type === "password" ? (
+              ) : designValue[index].type === "text" || designValue[index].type === "number"  || designValue[index].type === "email" || designValue[index].type === "password" || designValue[index].type === "date" ? (
                <div className="CampContainer">
                    <input
                    id={`name-${index}`}

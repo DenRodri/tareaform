@@ -4,8 +4,6 @@ import InputListMaker from './components/InputListMaker.jsx'
 import SignupForms from './components/SignupForms.jsx'
 import './App.css'
 export default function App() {
-  const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
   const [account, setAccount] = useState()
   const [formValues, setFormValues] = useState([]);
   const [formErrors, setFormErrors] = useState([]);
@@ -118,7 +116,6 @@ const Login = (email, password) => {
         setDisplay(true)
         localStorage.setItem("loggedin", JSON.stringify([false, '', '']))
       }}>Acabar Sesion</button>
-      
       </div>
        <form className="form" onSubmit={handleSubmit}>
        {FormatList.map((Inp, i) => (
@@ -135,10 +132,9 @@ const Login = (email, password) => {
 ))}
           
         </form>
-        <div className='AccountData'>
-      <h2>{account[0]}</h2>
-      <h2>{date}</h2>
-      </div>
+        <div class="AccountData">
+        <h2>{account[0]}</h2>
+        </div>
       </>
     )}
        

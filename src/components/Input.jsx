@@ -35,7 +35,7 @@ export default function Input({ name, type, onChange, options, formValues, index
           ))}
           {error?.ErrorName && <p className="Validation">{error?.ErrorName}</p>}
         </div>
-      ) : type === "text" || type === "password" || type === "number" || type === "email" ? (
+      ) : type === "date" || type === "text" || type === "password" || type === "number" || type === "email" ? (
         <div className="CampContainer">
           <label htmlFor={name}>{name}</label>
           <input
