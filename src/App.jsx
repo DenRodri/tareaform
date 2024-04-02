@@ -116,8 +116,6 @@ const Login = (email, password) => {
         setDisplay(true)
         localStorage.setItem("loggedin", JSON.stringify([false, '', '']))
       }}>Acabar Sesion</button>
-      <h2>{account[0]}</h2>
-      <h2>{account[1]}</h2>
       </div>
        <form className="form" onSubmit={handleSubmit}>
        {FormatList.map((Inp, i) => (
@@ -134,6 +132,9 @@ const Login = (email, password) => {
 ))}
           
         </form>
+        <div class="Email">
+        <h2>{account[0]}</h2>
+        </div>
       </>
     )}
        
