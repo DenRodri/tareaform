@@ -27,18 +27,22 @@ export default function App() {
   setFormErrors([]);
   setFormatLists(value);
 
+
   let newFormValues = value?.map((item) => ({
     type: item.type,
     name: item.name,
     value: '', 
+    obligatory: item.obligatory,
     options: item.options?.map((option) => ({ ...option })),
+    
   }));
 
   setFormValues(newFormValues);
-
-  let newFormErrors = newFormValues.map(() => ({
-    ErrorName: ""
-  }));
+  
+  let newFormErrors = newFormValues.map((item) => (
+    
+    { ErrorName: ""}
+  ));
 
   setFormErrors(newFormErrors);
 }
@@ -54,21 +58,23 @@ const Login = (email, password) => {
     
   };
   
-  const handleInputChange = (value, type, index) => {
+  const handleInputChange = (value, type, index, obligatory) => {
     let Error="";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ 
     const updatedErrorValues = [...formErrors];
     if (type === "number" && value < 1) {
       value = 1;
     }
-    if(value.length===0){
-      Error="No puede estar vacio el campo"
-    }else if (type === "text" && value.length < 2){
-      Error="Este campo debe ser mas largo que 2 caracteres"
-    }else if(type==="password" && value.length < 6){
-      Error="Este campo debe ser mas largo que 6 caracteres"
-    } else if(type==="email" && !emailRegex.test(value)){
-      Error="Debe de entrar un email valido"
+    if(obligatory === "Yes"){
+      if(value.length===0){
+        Error="No puede estar vacio el campo"
+      }else if (type === "text" && value.length < 2){
+        Error="Este campo debe ser mas largo que 2 caracteres"
+      }else if(type==="password" && value.length < 6){
+        Error="Este campo debe ser mas largo que 6 caracteres"
+      } else if(type==="email" && !emailRegex.test(value)){
+        Error="Debe de entrar un email valido"
+      }
     }
     
     if(Error===""){
@@ -127,6 +133,7 @@ const Login = (email, password) => {
     error={formErrors[i]}
     onChange={handleInputChange}
     formValues={formValues}
+    obligatory={Inp.obligatory}
     index={i}
   />
 ))}
