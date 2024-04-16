@@ -41,6 +41,7 @@ export default function InputListMaker({SendInfo}  ) {
           {
             type: 'None',
             name: '',
+            obligatory: 'Yes',
             options: [
                 
             ]}
@@ -166,6 +167,7 @@ export default function InputListMaker({SendInfo}  ) {
           {
             type: 'None',
             name: '',
+            obligatory: 'Yes',
             options: [
                 
             ]}
@@ -229,7 +231,17 @@ export default function InputListMaker({SendInfo}  ) {
                value={designValue[index].name}
                onChange={(e) => handleInputChange(e, index)}
                />
+                
               {fieldErrors[index].errorName && <p className="Validation">{fieldErrors[index].errorName}</p>}
+              <p>Opcional?</p>
+              <select
+              id={`type-${index}`}
+              name="obligatory"
+              value={designValue[index].obligatory}
+              onChange={(e) => handleInputChange(e, index)}>
+                <option value="Yes">Si</option>
+                <option value="No">No</option>
+            </select>
                {designValue[index].options.map((option, optionIndex) => (
                  <div className="Option" key={optionIndex}>
                   <div>
@@ -280,6 +292,15 @@ export default function InputListMaker({SendInfo}  ) {
                    onChange={(e) => handleInputChange(e, index)}
                    />
                    {fieldErrors[index].errorName && <p className="Validation">{fieldErrors[index].errorName}</p>}
+                   <p>Opcional?</p>
+                        <select
+                    id={`type-${index}`}
+                    name="obligatory"
+                    value={designValue[index].obligatory}
+                    onChange={(e) => handleInputChange(e, index)}>
+                      <option value="Yes">Si</option>
+                      <option value="No">No</option>
+                  </select>
                </div>
               ) : (
               <div><h1>Elija una opcion!</h1></div>
