@@ -125,7 +125,21 @@ select {
   flex-direction: column;
   text-align: center;
 }
+.InputStart{
+  flex-direction: row;
+}
 
+.DeleteInput{
+    width: 100px;
+    height: 40px;
+    margin-left: 5px;
+    margin-top: 0px;
+    background-color: #CCBCBC;
+    color: rgb(86, 0, 113);
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
 button {
   margin-top: 1.5em;
   padding: 0.5em 1em;

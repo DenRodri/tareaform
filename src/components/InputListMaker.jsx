@@ -175,6 +175,16 @@ export default function InputListMaker({SendInfo}  ) {
         setFieldErrors(NewfieldErrors)
         setDesignValues(NewDesignValue)
       }
+
+      const DeleteOne = (e, index) => {
+        let NewfieldErrors = [...fieldErrors];
+        console.log(index);
+        NewfieldErrors.splice()
+        let NewDesignValue = [...designValue]
+        NewDesignValue.splice(index, 1)
+        setFieldErrors(NewfieldErrors)
+        setDesignValues(NewDesignValue)
+      }
       useEffect(() => {
         
         const validationErrors = designValue.map((field) => ValidationInputList(field, designValue));
@@ -206,6 +216,7 @@ export default function InputListMaker({SendInfo}  ) {
               </>
             ) : (
               <>
+              <div className="InputStart">
                <select
             id={`type-${index}`}
             name="type"
@@ -220,6 +231,8 @@ export default function InputListMaker({SendInfo}  ) {
                <option value="select">Select</option>
                <option value="date">Fecha</option>
            </select>
+           <button type="button" className="DeleteInput" onClick={(e) => DeleteOne(e, index)}>Borrar</button>
+           </div>
               {designValue[index].type === "radio" || designValue[index].type === "select" ? (
                <div className="radioSelection">
                  
@@ -239,8 +252,8 @@ export default function InputListMaker({SendInfo}  ) {
               name="obligatory"
               value={designValue[index].obligatory}
               onChange={(e) => handleInputChange(e, index)}>
-                <option value="Yes">Si</option>
-                <option value="No">No</option>
+                <option value="Yes">No</option>
+                <option value="No">Si</option>
             </select>
                {designValue[index].options.map((option, optionIndex) => (
                  <div className="Option" key={optionIndex}>
@@ -298,8 +311,8 @@ export default function InputListMaker({SendInfo}  ) {
                     name="obligatory"
                     value={designValue[index].obligatory}
                     onChange={(e) => handleInputChange(e, index)}>
-                      <option value="Yes">Si</option>
-                      <option value="No">No</option>
+                      <option value="Yes">No</option>
+                      <option value="No">Si</option>
                   </select>
                </div>
               ) : (
