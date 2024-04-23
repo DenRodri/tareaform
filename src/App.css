@@ -38,21 +38,6 @@ div{
   
 }
 
-.LoginForm{
-  background-color: #A288A6;
-  padding: 1.5em;
-  border-radius: 8px;
-  width: 400px;
-  min-height: 75vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10vw;
-  margin-left: 5vw;
-  margin-top: 7.5vh;
-  margin-bottom: 7.5vh;
-}
 .form {
   background-color: #A288A6;
   padding: 1.5em;
@@ -116,30 +101,6 @@ select {
   margin-right: -100px;
 }
 
-.EndSessionDiv{
-  position: absolute;
-  margin-top: 20px;
-  background-color: white;
-  border-radius: 5px;
-  left: 75%;
-  flex-direction: column;
-  text-align: center;
-}
-.InputStart{
-  flex-direction: row;
-}
-
-.DeleteInput{
-    width: 100px;
-    height: 40px;
-    margin-left: 5px;
-    margin-top: 0px;
-    background-color: #CCBCBC;
-    color: rgb(86, 0, 113);
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-}
 button {
   margin-top: 1.5em;
   padding: 0.5em 1em;
@@ -162,22 +123,6 @@ button[disabled]:hover{
   background-color:#606060;
 }
 
-.radioSelection{
-  flex-direction: column;
-  margin-bottom: 2.5vh;
-}
-
-.Option{
-  height: 15vh;
-
-  display: flex;
-  flex-direction: column
-}
-.delete{
-  height: 6vh;
-  margin-top: 0;
-}
-
 .Validation{
   position: relative;
   border: 1px solid black;
@@ -198,8 +143,4 @@ button[disabled]:hover{
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent red transparent;
-}
-.ValueMappedBox{
-  flex-direction: column;
-  width: 75%;
 }

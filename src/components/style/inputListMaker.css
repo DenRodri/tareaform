@@ -1,0 +1,37 @@
+.radioSelection{
+  flex-direction: column;
+  margin-bottom: 2.5vh;
+}
+
+.DeleteInput{
+  width: 100px;
+  height: 40px;
+  margin-left: 5px;
+  margin-top: 0px;
+  background-color: #CCBCBC;
+  color: rgb(86, 0, 113);
+border: none;
+border-radius: 15px;
+cursor: pointer;
+}
+
+.delete{
+  height: 6vh;
+  margin-top: 0;
+}
+
+
+.InputStart{
+  flex-direction: row;
+}
+
+.Option{
+  height: 15vh;
+
+  display: flex;
+  flex-direction: column
+}
+.ValueMappedBox{
+  flex-direction: column;
+  width: 75%;
+}

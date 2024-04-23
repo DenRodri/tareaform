@@ -1,0 +1,15 @@
+.LoginForm{
+  background-color: #A288A6;
+  padding: 1.5em;
+  border-radius: 8px;
+  width: 400px;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10vw;
+  margin-left: 5vw;
+  margin-top: 7.5vh;
+  margin-bottom: 7.5vh;
+}

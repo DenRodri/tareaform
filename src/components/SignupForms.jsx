@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-
+import './style/signupForms.css'
 
 export default function SignupForms({Submit}) {
   const [Add, SetAdd] = useState(true);

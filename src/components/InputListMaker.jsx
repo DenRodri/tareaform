@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ValidationInputList from './ValidationInputList.js';
-
+import './style/inputListMaker.css'
 export default function InputListMaker({SendInfo}  ) {
     const [NumberInput,setNumberInput] = useState(1);
     const [DisplayForm, setDisplayForm] = useState(false);

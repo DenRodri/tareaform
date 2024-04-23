@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import './style/input.css'
 
 export default function Input({ name, type, onChange, options, formValues, index, error, obligatory }) {
   
