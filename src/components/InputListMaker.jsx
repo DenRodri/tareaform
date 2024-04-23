@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ValidationInputList from './ValidationInputList.js';
 import './style/inputListMaker.css'
-export default function InputListMaker({SendInfo}  ) {
+export default function InputListMaker({sendInfo}  ) {
     const [NumberInput,setNumberInput] = useState(1);
     const [DisplayForm, setDisplayForm] = useState(false);
     const [formEdited, setFormEdited] = useState(false);
@@ -73,7 +73,7 @@ export default function InputListMaker({SendInfo}  ) {
           console.log(fieldErrors);
         } else {
           console.log('Form is valid:', designValue);
-          SendInfo(designValue);
+          sendInfo(designValue);
           console.log(fieldErrors);
         }
       };

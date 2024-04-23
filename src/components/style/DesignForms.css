@@ -1,0 +1,39 @@
+.EndSessionBT{
+    min-height: 75vh;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    min-width: 200px;
+    margin-left: -100px;
+    margin-right: -100px;
+  }
+  .form {
+    background-color: #A288A6;
+    padding: 1.5em;
+    border-radius: 8px;
+    width: 400px;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5vw;
+    margin-left: 5vw;
+    margin-top: 15vh;
+    margin-bottom: 7.5vh;
+  }
+
+  .AccountData{
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border-radius: 5px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+

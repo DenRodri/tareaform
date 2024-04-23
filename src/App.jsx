@@ -1,8 +1,10 @@
 import React, { useState, useEffect }  from 'react'
-import Input from './components/Input.jsx'
 import InputListMaker from './components/InputListMaker.jsx'
 import SignupForms from './components/SignupForms.jsx'
+import DesignForm from './components/DesignForms.jsx'
 import './App.css'
+export const DataContext = React.createContext();
+
 export default function App() {
   const [account, setAccount] = useState()
   const [formValues, setFormValues] = useState([]);
@@ -50,13 +52,6 @@ const Login = (email, password) => {
   setAccount([email, password])
   setDisplay(false);
 };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Errors:', formErrors)
-    console.log('Form Values:', formValues);
-    console.log(FormatList)
-    
-  };
   
   const handleInputChange = (value, type, index, obligatory) => {
     let Error="";
@@ -116,32 +111,12 @@ const Login = (email, password) => {
       </>
     ) : ( 
       <>
-      <InputListMaker SendInfo={UploadParentValue}/>
-      <div className='EndSessionBT'>
-      <button onClick={()=> {
-        setDisplay(true)
-        localStorage.setItem("loggedin", JSON.stringify([false, '', '']))
-      }}>Acabar Sesion</button>
-      </div>
-       <form className="form" onSubmit={handleSubmit}>
-       {FormatList.map((Inp, i) => (
-  <Input
-    key={i}
-    name={Inp.name}
-    type={Inp.type}
-    options={Inp.options}
-    error={formErrors[i]}
-    onChange={handleInputChange}
-    formValues={formValues}
-    obligatory={Inp.obligatory}
-    index={i}
-  />
-))}
-          
-        </form>
-        <div class="AccountData">
-        <h2>{account[0]}</h2>
-        </div>
+      <InputListMaker sendInfo={UploadParentValue}/>
+      <DataContext.Provider value={{FormatList, formValues, formErrors, account}}>
+        <DesignForm displayChange={setDisplay} inputChange={handleInputChange}/>
+      </DataContext.Provider>
+      
+      
       </>
     )}
        

@@ -18,25 +18,8 @@ body {
 div{
   display: flex;
 }
-.form-control{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 1em;
-  
-}
 
-.AccountData{
-  position: absolute;
-  right: 0;
-  background-color: white;
-  border-radius: 5px;
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-}
+
 
 .form {
   background-color: #A288A6;
@@ -89,17 +72,6 @@ select {
   border: 5px solid #F1E3E4;
   border-radius: 4px;
 }
-.EndSessionBT{
-  min-height: 75vh;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-  min-width: 200px;
-  margin-left: -100px;
-  margin-right: -100px;
-}
 
 button {
   margin-top: 1.5em;
@@ -123,24 +95,3 @@ button[disabled]:hover{
   background-color:#606060;
 }
 
-.Validation{
-  position: relative;
-  border: 1px solid black;
-  padding: 5px;
-  color: white;
-  text-align: center;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
-  cursor: pointer;
-}
-
-.Validation:before {
-  content: "";
-  position: absolute;
-  top: -25%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent red transparent;
-}

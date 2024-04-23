@@ -35,3 +35,31 @@ cursor: pointer;
   flex-direction: column;
   width: 75%;
 }
+.Validation{
+  position: relative;
+  border: 1px solid black;
+  padding: 5px;
+  color: white;
+  text-align: center;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  cursor: pointer;
+}
+
+.Validation:before {
+  content: "";
+  position: absolute;
+  top: -25%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent red transparent;
+}
+.form-control{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1em;
+  
+}
